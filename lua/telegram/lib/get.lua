@@ -1,5 +1,5 @@
 function Telegram.Send(id, str)
-    http.Fetch("https://api.telegram.org/bot" .. Telegram.Config.BotID .. ":" .. Telegram.Config.BotToken .. "/sendMessage?chat_id=" .. id .. "&text=" .. str)
+	http.Fetch("https://api.telegram.org/bot" .. Telegram.Config.BotID .. ":" .. Telegram.Config.BotToken .. "/sendMessage?chat_id=" .. id .. "&text=" .. str)
 end
 
 function Telegram.GetChats()
