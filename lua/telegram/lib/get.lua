@@ -19,6 +19,10 @@ function Telegram.GetChats()
 		end
 
 		local msg_text = msg["text"]
+		if msg_test == nil then
+			return
+		end
+			
 		local cmd = string.Explode(" ", msg_text)[1]
 		cmd = string.Explode("/", cmd)[2]
 		if Telegram.Commands[cmd] then
