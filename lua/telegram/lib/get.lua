@@ -10,6 +10,10 @@ function Telegram.GetChats()
 		end
 
 		local msg =  html["result"][#html["result"]]["message"]
+		if msg == nil then
+			return
+		end
+			
 		local id = html["result"][#html["result"]]["message"]["chat"]["id"]
 
 		local msg_id = tostring(html["result"][#html["result"]]["message"]["message_id"])
