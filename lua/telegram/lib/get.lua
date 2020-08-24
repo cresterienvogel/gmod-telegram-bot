@@ -38,7 +38,5 @@ function Telegram.GetChats()
 				Telegram.Send(id, "No access.")
 			end
 		end
-
-		Telegram.CreateDayLog(date, msg_id)
 	end)
 end
