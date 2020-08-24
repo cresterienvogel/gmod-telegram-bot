@@ -1,3 +1,3 @@
 function Telegram.IsMessageSent(date, id)
-    return os.time() - date > 30 and true or false
+    return os.time() - tonumber(date) > 30 and true or false
 end
