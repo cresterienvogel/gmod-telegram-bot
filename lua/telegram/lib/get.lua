@@ -2,6 +2,7 @@ function Telegram.Send(id, str)
 	http.Fetch("https://api.telegram.org/bot" .. Telegram.Config.BotID .. ":" .. Telegram.Config.BotToken .. "/sendMessage?chat_id=" .. id .. "&text=" .. str)
 end
 
+local SentMessages = {}
 function Telegram.GetChats()
 	http.Fetch("https://api.telegram.org/bot" .. Telegram.Config.BotID .. ":" .. Telegram.Config.BotToken .. "/getUpdates?offset=-1", function(html)
 		html = util.JSONToTable(html)
@@ -17,8 +18,8 @@ function Telegram.GetChats()
 		local id = html["result"][#html["result"]]["message"]["chat"]["id"]
 
 		local msg_id = tostring(html["result"][#html["result"]]["message"]["message_id"])
-		local date = os.date("%d.%m.%Y", os.time())
-		if Telegram.IsMessageSent(date, msg_id) then
+		local date = html["result"][#html["result"]]["message"]["date"]
+		if Telegram.IsMessageSent(date, msg_id) or SentMessages[msg_id] then
 			return
 		end
 
@@ -32,6 +33,7 @@ function Telegram.GetChats()
 		if Telegram.Commands[cmd] then
 			if (Telegram.Commands[cmd].access <= 0) or (Telegram.Commands[cmd].access > 0 and Telegram.IsAdmin(id)) then
 				Telegram.Commands[cmd].func(msg_text, id)
+				SentMessages[msg_id] = true
 			else
 				Telegram.Send(id, "No access.")
 			end
