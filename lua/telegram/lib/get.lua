@@ -33,10 +33,10 @@ function Telegram.GetChats()
 		if Telegram.Commands[cmd] then
 			if (Telegram.Commands[cmd].access <= 0) or (Telegram.Commands[cmd].access > 0 and Telegram.IsAdmin(id)) then
 				Telegram.Commands[cmd].func(msg_text, id)
-				SentMessages[msg_id] = true
 			else
 				Telegram.Send(id, "No access.")
 			end
+			SentMessages[msg_id] = true
 		end
 	end)
 end
