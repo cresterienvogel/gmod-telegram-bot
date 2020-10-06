@@ -10,24 +10,24 @@ function Telegram.GetChats()
 			return 
 		end
 
-		local msg =  html["result"][#html["result"]]["message"]
+		local result = html["result"][#html["result"]]
+		if result == nil then
+			return
+		end
+
+		local msg = result["message"]
 		if msg == nil then
 			return
 		end
-			
-		local id = html["result"][#html["result"]]["message"]["chat"]["id"]
-
-		local msg_id = tostring(html["result"][#html["result"]]["message"]["message_id"])
-		local date = html["result"][#html["result"]]["message"]["date"]
+		
+		local id = msg["chat"]["id"]
+		local msg_id = tostring(msg["message_id"])
+		local date = msg["date"]
 		if Telegram.IsMessageSent(date, msg_id) or SentMessages[msg_id] then
 			return
 		end
 
 		local msg_text = msg["text"]
-		if msg_test == nil then
-			return
-		end
-			
 		local cmd = string.Explode(" ", msg_text)[1]
 		cmd = string.Explode("/", cmd)[2]
 		if Telegram.Commands[cmd] then
